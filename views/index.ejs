@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD App</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Patient List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Diagnosis</th>
+                <th>Entry Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% patients.forEach(patient => { %>
+            <tr>
+                <td><%= patient.name %></td>
+                <td><%= patient.age %></td>
+                <td><%= patient.gender %></td>
+                <td><%= patient.diagnosis %></td>
+                <td><%= patient.entryDate %></td>
+                <td>
+                    <form method="post" action="/update/<%= patient._id %>?_method=PUT">
+                        <input type ="hidden" name="_method" value="PUT">
+                        <input type = "text" name ="name" value = "<%=patient.name %>" required>
+                        <input type = "text" name ="age" value = "<%=patient.age %>" required>
+                        <input type = "text" name ="gender" value = "<%=patient.gender %>" required>
+                        <input type = "text" name ="diagnosis" value = "<%=patient.diagnosis %>" required>
+                        <input type = "text" name ="entryDate" value = "<%=patient.entryDate %>" required>
+                        
+                        <button type="submit">Update</button>
+                    </form>
+                    <form action="/delete/<%= patient._id %>?_method=DELETE" method="post">
+                       <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <div>
+        <form action="/save" method="post">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div>
+                <label for="age">Age:</label>
+                <input type="number" name="age" id="age" required>
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <div>
+                    <input type="radio" id="male" name="gender" value="Male" required>
+                    <label for="male">Male</label>
+                </div>
+                <div>
+                    <input type="radio" id="female" name="gender" value="Female" required>
+                    <label for="female">Female</label>
+                </div>
+            </div>
+            <div>
+                <label for="diagnosis">Diagnosis:</label>
+                <input type="text" name="diagnosis" id="diagnosis" required>
+            </div>
+            <div>
+                <label for="entryDate">Entry Date:</label>
+                <input type="date" name="entryDate" id="entryDate" required>
+            </div>
+            <div>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
